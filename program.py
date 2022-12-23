@@ -126,12 +126,12 @@ def dijkstra(graph: list, start: tuple, goal: tuple) -> str:
                                                # як попередник наступної точки
 
         unseen_nodes.pop(min_node) # видаляємо поточну точку зі списку точок, які ми ще не відвідали
-    curent = goal
+    current = goal
     path.insert(0,start) # вставляємо початкову точку в початок шляху
-    while curent != start: # поки поточна точка не дорівнює початковій точці
+    while current != start: # поки поточна точка не дорівнює початковій точці
         try:
-            path.insert(1, curent) # вставляємо поточну точку в початок шляху
-            curent = previous[curent] # встановлюємо поточну точку як попередник поточної точки
+            path.insert(1, current) # вставляємо поточну точку в початок шляху
+            current = previous[current] # встановлюємо поточну точку як попередник поточної точки
         except KeyError:
             return 'There is no path between the start and the goal'
 
