@@ -141,9 +141,10 @@ def dijkstra(graph, start, goal):
     except KeyError:
         return 'There is no path between the start and the goal'
     if shortest_distances[goal] != math.inf:
-        return f'The distance of path is {round(shortest_distances[goal], 2)}\nThis is your path: {path}'
+        return f'The distance of path is {round(shortest_distances[goal], 2)}\n\
+This is your path: {path}'
 
-dijkstra(distance(make_a_squar(read_file('myex.csv')), 5), (0,0), (39, 2))
+print(dijkstra(distance(make_a_squar(read_file('myex.csv')), 5), (0,0), (39, 2)))
 
 if __name__ == "__main__":
     import doctest
