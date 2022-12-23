@@ -1,19 +1,18 @@
 '''Finding the shortest path between two points surface'''
 import math
 
-def read_file(path: str) -> list:
-    """
-    This function reads the file and returns a list of lists
-    """
+def read_file(path):
     array = []
     with open(path, 'r', encoding='utf8') as file:
-        file.readline()
-        file.readline()
-        file.readline()
+        step = int(file.readline().split(' ')[1].replace('\n', ''))
+        start_1 = file.readline().replace('\n', '').split(' ')
+        start = (int(start_1[0]), int(start_1[1]))
+        goal_1 = file.readline().replace('\n', '').split(' ')
+        goal = (int(goal_1[0]), int(goal_1[1]))
         for row in file:
             row = row.split()
             array.append(list(map(float, row)))
-    return array
+    return array, step, start, goal
 
 def make_a_squar(array: list) -> list:
     """
@@ -83,15 +82,6 @@ def distance(array: list, step: int) -> list:
     return dicted
 
 def dijkstra(graph: list, start: tuple, goal: tuple) -> str:
-    '''
-    The function performs Dijkstra's algorithm to find the shortest path
-    >>> dijkstra(distance(make_a_squar(read_file('myex.csv')), 5), (0,0), (39, 2))
-    'The distance of path is 205.2\\nThis is your path: [(0, 0), (1, 0), (2, 0), (3, 0), \
-(4, 0), (5, 0), (6, 0), (7, 0), (8, 0), (9, 0), (10, 0), (11, 0), (12, 0), (13, 0), \
-(14, 0), (15, 0), (16, 0), (17, 0), (18, 0), (19, 0), (20, 0), (21, 0), (22, 0), \
-(23, 0), (24, 0), (25, 0), (26, 0), (27, 0), (28, 0), (29, 0), (30, 0), (31, 0), \
-(32, 0), (33, 0), (34, 0), (35, 0), (36, 0), (37, 0), (38, 0), (39, 0), (39, 1), (39, 2)]'
-    '''
 
     shortest_distances = {} # словник містить відстані від початку до всіх точок
     previous = {} # словник містить попередників для всіх точок
@@ -139,8 +129,11 @@ def dijkstra(graph: list, start: tuple, goal: tuple) -> str:
         return f'The distance of path is {round(shortest_distances[goal], 2)}\n\
 This is your path: {path}'
 
-print(dijkstra(distance(make_a_squar(read_file('myex.csv')), 5), (0,0), (1, 1)))
-
 if __name__ == "__main__":
-    import doctest
-    print(doctest.testmod())
+    path_to_file = 'your path'
+
+    arrly = read_file(path_to_file)[0]
+    step = read_file(path_to_file)[1]
+    start = read_file(path_to_file)[2]
+    goal = read_file(path_to_file)[3]
+    print( dijkstra(distance( make_a_squar(arrly), step), start, goal))
