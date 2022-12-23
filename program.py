@@ -140,7 +140,7 @@ def dijkstra(graph, start, goal):
             break
     path.insert(0,start) # вставляємо початкову точку в початок шляху
 # {round(shortest_distances[goal], 2)}
-    print(f'The distance of path is {shortest_distances[goal]}')
+    print(f'The distance of path is {round(shortest_distances[goal], 2)}')
     print(f'This is your path: {path}')
     return shortest_distances[goal]
 
