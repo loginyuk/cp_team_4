@@ -83,11 +83,24 @@ def distance(array, step):
     return dicted
 
 def dijkstra(graph, start, goal):
-    '''The function performs Dijkstra's algorithm to find the shortest path'''
+    '''
+    The function performs Dijkstra's algorithm to find the shortest path
+    >>> dijkstra(distance(make_a_squar(read_file('myex.csv')), 5), (0,0), (39, 2))
+    The distance of path is 205.2
+    This is your path: [(0, 0), (1, 0), (2, 0), (3, 0), \
+(4, 0), (5, 0), (6, 0), (7, 0), (8, 0), (9, 0), \
+(10, 0), (11, 0), (12, 0), (13, 0), (14, 0), (15, 0), \
+(16, 0), (17, 0), (18, 0), (19, 0), (20, 0), (21, 0), \
+(22, 0), (23, 0), (24, 0), (25, 0), (26, 0), (27, 0), (28, 0), \
+(29, 0), (30, 0), (31, 0), (32, 0), (33, 0), (34, 0), (35, 0), \
+(36, 0), (37, 0), (38, 0), (39, 0), (39, 1), (39, 2)]
+    205.2
+    '''
 
     shortest_distances = {} # словник містить відстані від початку до всіх точок
     previous = {} # словник містить попередників для всіх точок
-    unseen_nodes = graph # Це список точок, які ми ще не відвідали, ми будемо видаляти з нього точки, які ми відвідаємо
+    unseen_nodes = graph # Це список точок, які ми ще не відвідали,
+                         # ми будемо видаляти з нього точки, які ми відвідаємо
     path = [] # фінальний шлях, який ми повернемо
 
     for node in unseen_nodes:
@@ -100,21 +113,23 @@ def dijkstra(graph, start, goal):
         for node in unseen_nodes: # ітеруємося по всіх точках, які ми ще не відвідали
             s_distance = shortest_distances[node] # відстань до поточної точки
             if min_node is None or s_distance < min_distance: # якщо поточна точка ще не визначена
-                                                              # або відстань до поточної точки менша за мінімальну відстань
+                                                              # або відстань до поточної точки менша
+                                                              # за мінімальну відстань
                 min_node = node # встановлюємо поточну точку як мінімальну
-                min_distance = s_distance # встановлюємо відстань до поточної точки як мінімальну відстань
+                min_distance = s_distance # встановлюємо відстань
+                                          # до поточної точки як мінімальну відстань
 
         possible_path = graph[min_node] # список можливих шляхів від поточної точки
         min_distance = shortest_distances[min_node] # відстань до поточної точки
         for next_node, weight in possible_path:
-            # якщо вага поточного шляху + відстань до поточної точки менша 
+            # якщо вага поточного шляху + відстань до поточної точки менша
             # за відстань до наступної точки, то оновлюємо відстань до наступної точки
             if weight + min_distance < shortest_distances[next_node]:
-                shortest_distances[next_node] = weight + min_distance 
-                previous[next_node] = min_node # встановлюємо поточну точку як попередник наступної точки
+                shortest_distances[next_node] = weight + min_distance
+                previous[next_node] = min_node # встановлюємо поточну точку
+                                               # як попередник наступної точки
 
         unseen_nodes.pop(min_node) # видаляємо поточну точку зі списку точок, які ми ще не відвідали
-
     curent = goal
     while curent != start: # поки поточна точка не дорівнює початковій точці
         try:
@@ -124,9 +139,12 @@ def dijkstra(graph, start, goal):
             print('There is no path between the start and the goal')
             break
     path.insert(0,start) # вставляємо початкову точку в початок шляху
-
-    print(f'The distance of path is: {shortest_distances[goal]}')
+# {round(shortest_distances[goal], 2)}
+    print(f'The distance of path is {shortest_distances[goal]}')
     print(f'This is your path: {path}')
-    return path
+    return shortest_distances[goal]
 
-dijkstra(distance(make_a_squar(read_file('myex.csv')), 5), (0,0), (2, 1))
+# dijkstra(distance(make_a_squar(read_file('myex.csv')), 5), (0,0), (39, 2))
+if __name__ == "__main__":
+    import doctest
+    print(doctest.testmod())
