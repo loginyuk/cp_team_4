@@ -1,7 +1,7 @@
 '''Finding the shortest path between two points surface'''
 import math
 
-def read_file(path):
+def read_file(path: str) -> list:
     """
     This function reads the file and returns a list of lists
     """
@@ -15,7 +15,7 @@ def read_file(path):
             array.append(list(map(float, row)))
     return array
 
-def make_a_squar(array):
+def make_a_squar(array: list) -> list:
     """
     This function makes a square from a list of lists
     """
@@ -32,7 +32,7 @@ def make_a_squar(array):
             array.append(elem)
     return array
 
-def distance(array, step):
+def distance(array: list, step: int) -> list:
     """
     s = sqrt((h1-h2)^2 + step^2)
     M[i][j] - M[i][j+1]
@@ -82,7 +82,7 @@ def distance(array, step):
             dicted[lst[i][0]].append(lst[i][1:])
     return dicted
 
-def dijkstra(graph, start, goal):
+def dijkstra(graph: list, start: tuple, goal: tuple) -> str:
     '''
     The function performs Dijkstra's algorithm to find the shortest path
     >>> dijkstra(distance(make_a_squar(read_file('myex.csv')), 5), (0,0), (39, 2))
@@ -106,7 +106,7 @@ def dijkstra(graph, start, goal):
     while unseen_nodes: # поки є точки, які ми ще не відвідали
         min_node = None
         min_distance = math.inf
-        for node in unseen_nodes: # ітеруємося по всіх точках, які ми ще не відвідали
+        for node in unseen_nodes: # ітеруємо по всіх точках, які ми ще не відвідали
             s_distance = shortest_distances[node] # відстань до поточної точки
             if min_node is None or s_distance < min_distance: # якщо поточна точка ще не визначена
                                                               # або відстань до поточної точки менша
@@ -127,13 +127,13 @@ def dijkstra(graph, start, goal):
 
         unseen_nodes.pop(min_node) # видаляємо поточну точку зі списку точок, які ми ще не відвідали
     curent = goal
+    path.insert(0,start) # вставляємо початкову точку в початок шляху
     while curent != start: # поки поточна точка не дорівнює початковій точці
         try:
-            path.insert(0, curent) # вставляємо поточну точку в початок шляху
+            path.insert(1, curent) # вставляємо поточну точку в початок шляху
             curent = previous[curent] # встановлюємо поточну точку як попередник поточної точки
         except KeyError:
             return 'There is no path between the start and the goal'
-    path.insert(0,start) # вставляємо початкову точку в початок шляху
 
     try:
         if shortest_distances[goal] != math.inf:
