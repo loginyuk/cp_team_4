@@ -134,8 +134,7 @@ def dijkstra(graph, start, goal):
         except KeyError:
             return 'There is no path between the start and the goal'
     path.insert(0,start) # вставляємо початкову точку в початок шляху
-# {round(shortest_distances[goal], 2)}
-    
+
     try:
         if shortest_distances[goal] != math.inf:
             shortest_distances[goal] = shortest_distances[goal]
