@@ -86,15 +86,11 @@ def dijkstra(graph, start, goal):
     '''
     The function performs Dijkstra's algorithm to find the shortest path
     >>> dijkstra(distance(make_a_squar(read_file('myex.csv')), 5), (0,0), (39, 2))
-    The distance of path is 205.2
-    This is your path: [(0, 0), (1, 0), (2, 0), (3, 0), \
-(4, 0), (5, 0), (6, 0), (7, 0), (8, 0), (9, 0), \
-(10, 0), (11, 0), (12, 0), (13, 0), (14, 0), (15, 0), \
-(16, 0), (17, 0), (18, 0), (19, 0), (20, 0), (21, 0), \
-(22, 0), (23, 0), (24, 0), (25, 0), (26, 0), (27, 0), (28, 0), \
-(29, 0), (30, 0), (31, 0), (32, 0), (33, 0), (34, 0), (35, 0), \
-(36, 0), (37, 0), (38, 0), (39, 0), (39, 1), (39, 2)]
-    205.2
+    'The distance of path is 205.2\\nThis is your path: [(0, 0), (1, 0), (2, 0), (3, 0), \
+(4, 0), (5, 0), (6, 0), (7, 0), (8, 0), (9, 0), (10, 0), (11, 0), (12, 0), (13, 0), \
+(14, 0), (15, 0), (16, 0), (17, 0), (18, 0), (19, 0), (20, 0), (21, 0), (22, 0), \
+(23, 0), (24, 0), (25, 0), (26, 0), (27, 0), (28, 0), (29, 0), (30, 0), (31, 0), \
+(32, 0), (33, 0), (34, 0), (35, 0), (36, 0), (37, 0), (38, 0), (39, 0), (39, 1), (39, 2)]'
     '''
 
     shortest_distances = {} # словник містить відстані від початку до всіх точок
@@ -136,15 +132,20 @@ def dijkstra(graph, start, goal):
             path.insert(0, curent) # вставляємо поточну точку в початок шляху
             curent = previous[curent] # встановлюємо поточну точку як попередник поточної точки
         except KeyError:
-            print('There is no path between the start and the goal')
-            break
+            return 'There is no path between the start and the goal'
     path.insert(0,start) # вставляємо початкову точку в початок шляху
 # {round(shortest_distances[goal], 2)}
-    print(f'The distance of path is {round(shortest_distances[goal], 2)}')
-    print(f'This is your path: {path}')
-    return shortest_distances[goal]
+    
+    try:
+        if shortest_distances[goal] != math.inf:
+            shortest_distances[goal] = shortest_distances[goal]
+    except KeyError:
+        return 'There is no path between the start and the goal'
+    if shortest_distances[goal] != math.inf:
+        return f'The distance of path is {round(shortest_distances[goal], 2)}\nThis is your path: {path}'
 
-# dijkstra(distance(make_a_squar(read_file('myex.csv')), 5), (0,0), (39, 2))
+dijkstra(distance(make_a_squar(read_file('myex.csv')), 5), (0,0), (39, 2))
+
 if __name__ == "__main__":
     import doctest
     print(doctest.testmod())
